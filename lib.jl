@@ -80,6 +80,7 @@ macro showmacro(args...)
     println("The outer macro call:")
     println(indent((join([rmlines(arg) for arg in args], " "))))
     println("expanded to:")
+    empty!(source_to_expansions)
     quote
         println(indent(string(walkrmlines(@macroexpand $(args...)))))
 
