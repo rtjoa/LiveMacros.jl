@@ -11,4 +11,7 @@ include("lib.jl")
     end
 end
 
+@fill_assign arr 5 3
+println(arr) # [[5], [5], [5]]
+
 @showmacro @fill_assign arr f() 3
