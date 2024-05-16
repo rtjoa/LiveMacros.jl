@@ -14,7 +14,7 @@ macro fill_assign(var, x, N)
 end
 ```
 
-Use `@livemacro`:
+Use `@livemacro` (only first line differs):
 
 ```julia
 @livemacro fill_assign(var, x, N) begin
