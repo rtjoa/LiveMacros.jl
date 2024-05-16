@@ -69,7 +69,7 @@ end
 
 function indent(lines)
     join([
-        "  $(line)"
+        "    $(line)"
         for line in split(lines, "\n")
     ], "\n")
 end
@@ -79,7 +79,7 @@ walkrmlines(e) = postwalk(rmlines, e)
 macro showmacro(args...)
     println("The outer macro call:")
     println(indent((join([rmlines(arg) for arg in args], " "))))
-    println("expanded to:")
+    println("expanded to")
     empty!(source_to_expansions)
     quote
         println(indent(string(walkrmlines(@macroexpand $(args...)))))
@@ -89,7 +89,7 @@ macro showmacro(args...)
             println("====")
             println()
             source = walkrmlines(source)
-            println("The contained quote:")
+            println("The contained quote")
             println(indent("$(source)"))
             println("expanded to")
             println(join(
