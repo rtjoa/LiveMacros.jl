@@ -29,7 +29,12 @@ Use `@livemacro` (only first line differs):
 end
 ```
 
-This defines the macro as normal, but also allows you to debug what each individual quoted expression expands to with `@showmacro`.
+The macro can be called as normal:
+```julia
+@fill_assign arr 3 f()
+```
+
+But now, we can also debug what each individual quoted expression expands to with `@showmacro`.
 
 ```julia
 @showmacro @fill_assign arr f() 3
@@ -38,36 +43,36 @@ This defines the macro as normal, but also allows you to debug what each individ
 Prints:
 ```
 The outer macro call:
-  @fill_assign arr f() 3
-expanded to:
-  begin
-      var"#16###312" = Main.f()
-      arr = [[var"#16###312"], [var"#16###312"], [var"#16###312"]]
-  end
+    @fill_assign arr f() 3
+expanded to
+    begin
+        var"#17###313" = Main.f()
+        arr = [[var"#17###313"], [var"#17###313"], [var"#17###313"]]
+    end
 
 ====
 
-The contained quote:
-  quote
-      $x_computed = $x
-      $(esc(var)) = [$([:([$x_computed]) for _ = 1:N]...)]
-  end
+The contained quote
+    quote
+        $x_computed = $x
+        $(esc(var)) = [$([:([$x_computed]) for _ = 1:N]...)]
+    end
 expanded to
-  begin
-      var"##312" = f()
-      $(Expr(:escape, :arr)) = [[var"##312"], [var"##312"], [var"##312"]]
-  end
+    begin
+        var"##313" = f()
+        $(Expr(:escape, :arr)) = [[var"##313"], [var"##313"], [var"##313"]]
+    end
 
 ====
 
-The contained quote:
-  :([$x_computed])
+The contained quote
+    :([$x_computed])
 expanded to
-  [var"##312"]
+    [var"##313"]
 and
-  [var"##312"]
+    [var"##313"]
 and
-  [var"##312"]
+    [var"##313"]
 ```
 
 To try, run `julia test.jl`.
